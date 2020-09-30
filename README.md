@@ -1,4 +1,4 @@
-##一. 功能
+## 一. 功能
    在自己文章引用网址，一般我们直接复制网址，但如果复制标题得分开复制，并且要重新排版，但不做又不行，否则你引用一堆网址，到后你都不知道某个链接对应的大致内容是什么。所以我做这一个Chrome扩展，点击一下自动生成一个Markdown 格式内容， 包括标题和网址。
 
 这个扩展参考了 TabCopy 这个扩展，https://github.com/hansifer/TabCopy
@@ -44,13 +44,13 @@ refer [^3]
   1.  使用右键菜单，
      选择不同格式进行拷贝
 
-![image.png](./img1.png)
+![image.png](img1.png)
 
   2. 点击右上角的图标
     点击一次，生成引用块格式，连击二次生成脚注格式，连击三次生成标准链接格式
-  ![image.png](./img2.png)
+  ![image.png](img2.png)
 
 3. 快捷键方式
    在浏览器输入 chrome://extensions/shortcuts
 为每个功能分配一个快捷键，这样按下快捷键可以同样实现类型功能 
-![image.png](./img3.webp)
+![image.png](img3.webp)
