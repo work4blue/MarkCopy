@@ -1,0 +1,49 @@
+{
+	"name": "MarkCopy",
+	"version": "1.06",
+	"manifest_version": 2,
+	"description": "Copy url information to MarkDown .",
+  "background": {
+       "page": "bg.html"
+  },
+	"icons": {
+        "19": "img/mc-19.png",
+        "128": "img/mc-128.png"
+	},
+	
+  "page_action": {
+    "default_icon": {
+      "19": "img/mc-19.png",
+      "128": "img/mc-128.png"
+    },
+    "default_title": "single click: copy selected tab as  refer block\ndouble click: copy selected tab as  footmark\ntriple click:copy selected tab as link"
+  },
+	"commands": {
+      "copyMdTextBlock": {
+       "suggest_key": {
+        "default": "Ctrl+C"
+      },
+      "description": "copy page url as MarkDown text block"
+    },
+    "copyMdFootmark": {
+      "suggest_key": {
+        "default": "Ctrl+Alt+c"
+      },
+      "description": "copy page url as MarkDown Footmark"
+    },
+     "copyMdLink": {
+      "suggest_key": {
+        "default": "Ctrl+Alt+L"
+      },
+      "description": "copy page url as MarkDown Footmark"
+    },
+     "exchangeTabs": {
+      "suggest_key": {
+        "default": "Ctrl + E"
+      },
+      "description": "exchangeTabs in two tabs"
+    }
+  },
+	"permissions": ["tabs", "<all_urls>", "clipboardWrite",
+    "contextMenus"]
+}
