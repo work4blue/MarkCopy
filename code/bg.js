@@ -13,6 +13,8 @@
 
     var bkg = chrome.extension.getBackgroundPage();
 
+
+
 //     >#### **[Javascript-谷歌浏览器扩展程序:: console.log（）从后台页面开始？ - 堆栈溢出](https://stackoverflow.com/questions/3829150/google-chrome-extension-console-log-from-background-page)**
 // >
 // >url:https://stackoverflow.com/questions/3829150/google-chrome-extension-console-log-from-background-page
@@ -21,7 +23,7 @@
      var parent = chrome.contextMenus.create({"title": "MarkCopy","contexts": ['all']});
 
     chrome.contextMenus.create({
-        title: 'Copy tab as Markdown refer block',
+        title: 'Copy as refer block ',
         parentId:parent,
         // contexts: ['link', 'page'],
         onclick: function(info, tab) {
@@ -33,29 +35,29 @@
           
             allowClickProcessing = false;
             console.log("copyTabAsReferBlock222 "+allowClickProcessing)
-            copyTabAsReferBlock(tab)
+            copyTabAsReferBlock(tab,false)
         }
     });
 
       chrome.contextMenus.create({
-        title: 'Copy tab as Markdown footmark',
+        title: 'Copy as footmark ',
         parentId:parent,
         // contexts: ['link', 'page'],
         onclick: function(info, tab) {
            // alert("url "+info.linkUrl+",tab "+tab.title)
             allowClickProcessing = false;
-            copyTabAsFootmark(tab)
+            copyTabAsFootmark(tab,false)
         }
     });
 
          chrome.contextMenus.create({
-        title: 'Copy tab as Markdown link',
+        title: 'Copy page url as MarkDown link',
         parentId:parent,
         // contexts: ['link', 'page'],
         onclick: function(info, tab) {
            // alert("url "+info.linkUrl+",tab "+tab.title)
             allowClickProcessing = false;
-            copyTabAsLink(tab)
+            copyTabAsLink(tab,false)
         }
     });
 
@@ -136,14 +138,14 @@ function exchangeTab(){
 
          try {
                 if (clicks > 2) {
-                    copyTabAsLink(tab)
+                    copyTabAsLink(tab,true)
                   //triple click
                 } else if (clicks > 1){
                    //double click
-                  copyTabAsFootmark(tab)
+                  copyTabAsFootmark(tab,true)
                 }
                 else 
-                    copyTabAsReferBlock(tab)
+                    copyTabAsReferBlock(tab,true)
             } catch (err) {
                 notifyError(tab);
             }
@@ -154,27 +156,72 @@ function exchangeTab(){
   }          
 
 
-   function copyTabAsReferBlock(tab){
-       copyTab(tab,'referBlock')
+   function copyTabAsReferBlock(tab,withDesc){
+       copyTabAsMD(tab,'referBlock',withDesc)
    }
 
-   function copyTabAsFootmark(tab){
-     copyTab(tab,'footmark')
+   function copyTabAsFootmark(tab,withDesc){
+     copyTabAsMD(tab,'footmark',withDesc)
    }
 
-    function copyTabAsLink(tab){
-      copyTab(tab,'link')
+    function copyTabAsLink(tab,withDesc){
+      copyTabAsMD(tab,'link',withDesc)
    }
+
+  
+
+
+  
+
+  function copyWithDesc(tab,format){
+
+    let myTab = tab
+    let myFormat = format
+
+    // document.getElementsByName('description')[0].getAttribute('content');
+    var srcCode = 'var meta = document.querySelector("meta[name=\'description\']");' + 
+           'if (meta){} else meta = document.querySelector("meta[name=\'Description\']");' +
+           ' meta = meta.getAttribute("content");' +
+           '({' +
+           '    title: document.title,' +
+           '    description: meta || ""' +
+           '});';
+     chrome.tabs.executeScript(tab.id,{
+       code: srcCode
+    }, function(results) {
+        if (!results) {
+        // An error occurred at executing the script. You've probably not got
+        // the permission to execute a content script for the current tab
+        return;
+     }
+      var result = results[0];
+
+      copyTab(myTab,myFormat,result.description);
+    // Now, do something with result.title and result.description
+     });
+
+   }  
+
+   
    
 
-    function copyTab(tab,format){
+    function copyTab(tab,format,desc){
         referIndex = referIndex+1
+        
         console.log("copyTab "+format+",idx="+referIndex)
-        var text = tabText(tab,format,referIndex)
+        var text = tabText(tab,format,referIndex,desc)
        // alert("copy "+referIndex+" = "+text)
         copyToClipboard(text)
         notifyOK(tab);
     }
+
+     function copyTabAsMD(tab,format,withDesc){
+      if(withDesc){
+          copyWithDesc(tab,format)
+      }
+      else  copyTab(tab,format,null);
+
+   }
 
    
 

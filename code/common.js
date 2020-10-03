@@ -15,12 +15,20 @@ footerMark
 
 */
 
-function tabText(t, format, index) {
+function tabText(t, format, index,desc) {
 
     switch (format) {
-        case 'referBlock':
+        case 'referBlock':{
 
-            return '>#### **[' + (t.title && t.title.trim() ? t.title : t.url) + '](' + t.url + ')**\n>\n>url:'+t.url;
+            var title = (t.title && t.title.trim() ? t.title : t.url) 
+            var content = '>#### **[' +title + '](' + t.url + ')**\n'
+
+             if(desc && (title !=desc) )
+                content += '>\n> &ensp;&ensp;'+desc +'\n'
+
+             content +='>\n>url:'+t.url;
+             return content
+            }
 
           case 'footmark':
 
@@ -62,4 +70,42 @@ function setValue(key, val) {
             localStorage.removeItem(aliases[i]);
         }
     }
-}          
+}   
+
+function getHtmlDesc(doc){
+   var meta = doc.getElementsByTagName('meta');
+   
+   for(i in meta){
+    if(typeof meta[i].name!="undefined"&&meta[i].name.toLowerCase()=="description"){
+       return meta[i].content;
+     }
+   }
+
+   return null
+}  
+
+function getTabDesc(tab){
+    // document.getElementsByName('description')[0].getAttribute('content');
+    var srcCode = 'var meta = document.querySelector("meta[name=\'description\']");' + 
+           'if (meta) meta = meta.getAttribute("content");' +
+           '({' +
+           '    title: document.title,' +
+           '    description: meta || ""' +
+           '});';
+chrome.tabs.executeScript(tab.id,{
+    code: srcCode
+}, function(results) {
+    if (!results) {
+        // An error occurred at executing the script. You've probably not got
+        // the permission to execute a content script for the current tab
+        return;
+    }
+    var result = results[0];
+    // Now, do something with result.title and result.description
+});
+
+
+
+//access DOM 
+//https://stackoverflow.com/questions/4532236/how-to-access-the-webpage-dom-rather-than-the-extension-page-dom
+}     
