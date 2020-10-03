@@ -17,32 +17,32 @@
       "19": "img/mc-19.png",
       "128": "img/mc-128.png"
     },
-    "default_title": "single click: copy selected tab as  refer block\ndouble click: copy selected tab as  footmark\ntriple click:copy selected tab as link"
+    "default_title": "__MSG_tooltips__"
   },
 	"commands": {
-      "copyMdTextBlock": {
+      "copyMdReferBlock": {
        "suggest_key": {
         "default": "Ctrl+C"
       },
-      "description": "Copy as refer block (without description)"
+      "description": "__MSG_menu_refer_block__"
     },
     "copyMdFootmark": {
       "suggest_key": {
         "default": "Ctrl+Alt+c"
       },
-      "description": "Copy as footmark  (without description)"
+      "description": "__MSG_menu_footmark__"
     },
      "copyMdLink": {
       "suggest_key": {
         "default": "Ctrl+Alt+L"
       },
-      "description": "Copy page url as MarkDown link"
+      "description": "__MSG_menu_link__"
     },
      "exchangeTabs": {
       "suggest_key": {
         "default": "Ctrl + E"
       },
-      "description": "exchangeTabs in two tabs"
+      "description": "__MSG_menu_exchange_tabs__"
     }
   },
 	"permissions": ["tabs", "<all_urls>", "clipboardWrite",

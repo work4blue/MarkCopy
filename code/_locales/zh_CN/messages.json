@@ -1,9 +1,9 @@
 {
 	"pluginDesc": {"message": "一键把网页链接，图片转换成MarkDown 友好显示格式，方便MarkDown 排版"},
-	"menuCopyMdReferBlock":{"message": "拷贝成MD引用块"},
-	"menuMdFootmark":{"message": "拷贝成MD脚注"},
-	"menuCopyMdLink":{"message": "拷贝成MD链接"},
-	"menuExchangeTabs":{"message": "Exchange Tabs in two tabs"},
+	"menu_refer_block":{"message": "拷贝成MD引用块"},
+	"menu_footmark":{"message": "拷贝成MD脚注"},
+	"menu_link":{"message": "拷贝成MD链接"},
+	"menu_exchange_tabs":{"message": "Exchange Tabs in two tabs"},
 	"tooltips":{"message": "单击: 当前网址拷贝成MD引用块\n双击:当前网址拷贝成MD脚注\n三击：当前网址拷贝成MD链接"},
 	"link":{"message": "原文链接"}
 }

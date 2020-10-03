@@ -23,7 +23,7 @@
      var parent = chrome.contextMenus.create({"title": "MarkCopy","contexts": ['all']});
 
     chrome.contextMenus.create({
-        title: 'Copy as refer block ',
+        title: chrome.i18n.getMessage('menu_refer_block'),
         parentId:parent,
         // contexts: ['link', 'page'],
         onclick: function(info, tab) {
@@ -40,7 +40,7 @@
     });
 
       chrome.contextMenus.create({
-        title: 'Copy as footmark ',
+        title:  chrome.i18n.getMessage('menu_footmark'),
         parentId:parent,
         // contexts: ['link', 'page'],
         onclick: function(info, tab) {
@@ -51,7 +51,7 @@
     });
 
          chrome.contextMenus.create({
-        title: 'Copy page url as MarkDown link',
+        title: chrome.i18n.getMessage('menu_link'),
         parentId:parent,
         // contexts: ['link', 'page'],
         onclick: function(info, tab) {
@@ -186,14 +186,12 @@ function exchangeTab(){
            '    title: document.title,' +
            '    description: meta || ""' +
            '});';
-     chrome.tabs.executeScript(tab.id,{
-       code: srcCode
-    }, function(results) {
+     chrome.tabs.executeScript(tab.id,{code: srcCode}, function(results) {
         if (!results) {
-        // An error occurred at executing the script. You've probably not got
-        // the permission to execute a content script for the current tab
-        return;
-     }
+            // An error occurred at executing the script. You've probably not got
+            // the permission to execute a content script for the current tab
+            return;
+          }
       var result = results[0];
 
       copyTab(myTab,myFormat,result.description);
