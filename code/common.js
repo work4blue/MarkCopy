@@ -26,13 +26,13 @@ function tabText(t, format, index,desc) {
              if(desc && (title !=desc) )
                 content += '>\n> &ensp;&ensp;'+desc +'\n'
 
-             content +='>\n>url:'+t.url;
+             content +='>\n>'+chrome.i18n.getMessage('link')+':'+t.url;
              return content
             }
 
           case 'footmark':
 
-            return 'refer [^'+index+']\n[^'+index+']: ' + (t.title && t.title.trim() ? t.title : t.url) + ' ' + t.url ;  
+            return chrome.i18n.getMessage('link')+' [^'+index+']\n[^'+index+']: ' + (t.title && t.title.trim() ? t.title : t.url) + ' ' + t.url ;  
          case 'link':
 
             return '[' + (t.title && t.title.trim() ? t.title : t.url) + '](' + t.url + ')';     
@@ -104,8 +104,22 @@ chrome.tabs.executeScript(tab.id,{
     // Now, do something with result.title and result.description
 });
 
+// 获取当前选项卡ID
+function getCurrentTabId(callback)
+{
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs)
+    {
+        if(callback) callback(tabs.length ? tabs[0].id: null);
+    });
+}
 
-
+// 当前标签打开某个链接
+function openUrlCurrentTab(url)
+{
+    getCurrentTabId(tabId => {
+        chrome.tabs.update(tabId, {url: url});
+    })
+}
 //access DOM 
 //https://stackoverflow.com/questions/4532236/how-to-access-the-webpage-dom-rather-than-the-extension-page-dom
 }     

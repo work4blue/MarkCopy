@@ -1,0 +1,9 @@
+{
+	"pluginDesc": {"message": "Copy url /html  as MarkDown text."},	
+	"menuCopyMdReferBlock":{"message": "Copy as MD refer block"},
+	"menuMdFootmark":{"message": "Copy as MD footmark "},
+	"menuCopyMdLink":{"message": "Copy page url as MarkDown link"},
+	"menuExchangeTabs":{"message": "Exchange Tabs in two tabs"},
+	"tooltips":{"message": "single click: copy selected url as MD refer block\ndouble click: copy selected url as  MD footmark\ntriple click:copy selected url as MD link"},
+    "link":{"message": "link"}
+}

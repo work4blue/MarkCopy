@@ -2,7 +2,8 @@
 	"name": "MarkCopy",
 	"version": "1.08",
 	"manifest_version": 2,
-	"description": "Copy url /html  as MarkDown .",
+	"description": "__MSG_pluginDesc__",
+  "default_locale": "en",
   "background": {
        "page": "bg.html"
   },
@@ -23,19 +24,19 @@
        "suggest_key": {
         "default": "Ctrl+C"
       },
-      "description": "copy page url as MarkDown text block"
+      "description": "Copy as refer block (without description)"
     },
     "copyMdFootmark": {
       "suggest_key": {
         "default": "Ctrl+Alt+c"
       },
-      "description": "copy page url as MarkDown Footmark"
+      "description": "Copy as footmark  (without description)"
     },
      "copyMdLink": {
       "suggest_key": {
         "default": "Ctrl+Alt+L"
       },
-      "description": "copy page url as MarkDown Footmark"
+      "description": "Copy page url as MarkDown link"
     },
      "exchangeTabs": {
       "suggest_key": {
