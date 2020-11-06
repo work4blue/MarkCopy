@@ -5,5 +5,7 @@
 	"menu_link":{"message": "拷贝成MD链接"},
 	"menu_exchange_tabs":{"message": "Exchange Tabs in two tabs"},
 	"tooltips":{"message": "单击: 当前网址拷贝成MD引用块\n双击:当前网址拷贝成MD脚注\n三击：当前网址拷贝成MD链接"},
+	"more_table":{"message": "更多 MD/html/CSV 表格... "},
+	"ouput_current_window":{"message":"输出当前窗口链接列表"},
 	"link":{"message": "原文链接"}
 }

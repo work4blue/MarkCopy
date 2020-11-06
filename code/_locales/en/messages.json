@@ -5,5 +5,8 @@
 	"menuCopyMdLink":{"message": "Copy page url as MarkDown link"},
 	"menu_exchange_tabs":{"message": "Exchange Tabs in two tabs"},
 	"tooltips":{"message": "single click: copy selected url as MD refer block\ndouble click: copy selected url as  MD footmark\ntriple click:copy selected url as MD link"},
+    "more_table":{"message": "More MD/html/CSV table... "},
+    "ouput_current_window":{"message": "copy as link list from current windows."},
     "link":{"message": "link"}
+
 }

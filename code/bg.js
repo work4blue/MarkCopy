@@ -22,6 +22,19 @@
 
      var parent = chrome.contextMenus.create({"title": "MarkCopy","contexts": ['all']});
 
+       chrome.contextMenus.create({
+        title:  chrome.i18n.getMessage('ouput_current_window'),
+        type: "checkbox",
+        parentId:parent,
+        // contexts: ['link', 'page'],
+        onclick: function(info, tab) {
+           // alert("url "+info.linkUrl+",tab "+tab.title)
+                  console.log("checkbox item " + info.menuItemId +  
+              " was clicked, state is now: " + info.checked +  
+              "(previous state was " + info.wasChecked + ")");  
+        }
+    });
+
     chrome.contextMenus.create({
         title: chrome.i18n.getMessage('menu_refer_block'),
         parentId:parent,
