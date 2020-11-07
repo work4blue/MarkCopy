@@ -39,38 +39,58 @@ function tabText(t, format, index,desc) {
      }
  } 
 
+ function getKeyValue(key,def){
 
- function getValue(key) {
-    var val = localStorage.getItem(key);
+   var val = localStorage.getItem(key);
+   if(val){
+       return val;
+   }
 
-    if (val) {
-        return translate(val, key);
-    }
+   return def;     
 
-    var aliases = keyAliases[key];
+   var value = localStorage[key];
+   if(value)
+      return value;
 
-    if (aliases) {
-        for (var i = aliases.length; i--;) {
-            if ((val = localStorage.getItem(aliases[i]))) {
-                return translate(val, key);
-            }
-        }
-    }
+    return def;
+ }
 
-    return def(key);
-}
+ function setKeyValue(key,value){
+  localStorage[key] = value
+ }
 
-function setValue(key, val) {
-    localStorage.setItem(key, val);
 
-    var aliases = keyAliases[key];
+//  function getValue(key) {
+//     var val = localStorage.getItem(key);
 
-    if (aliases) {
-        for (var i = aliases.length; i--;) {
-            localStorage.removeItem(aliases[i]);
-        }
-    }
-}   
+//     if (val) {
+//         return translate(val, key);
+//     }
+
+//     var aliases = keyAliases[key];
+
+//     if (aliases) {
+//         for (var i = aliases.length; i--;) {
+//             if ((val = localStorage.getItem(aliases[i]))) {
+//                 return translate(val, key);
+//             }
+//         }
+//     }
+
+//     return def(key);
+// }
+
+// function setValue(key, val) {
+//     localStorage.setItem(key, val);
+
+//     var aliases = keyAliases[key];
+
+//     if (aliases) {
+//         for (var i = aliases.length; i--;) {
+//             localStorage.removeItem(aliases[i]);
+//         }
+//     }
+// }   
 
 function getHtmlDesc(doc){
    var meta = doc.getElementsByTagName('meta');

@@ -13,6 +13,10 @@
 
     var bkg = chrome.extension.getBackgroundPage();
 
+    var listMode = getKeyValue("listMode",true);
+
+    //var listMode = true
+
 
 
 //     >#### **[Javascript-谷歌浏览器扩展程序:: console.log（）从后台页面开始？ - 堆栈溢出](https://stackoverflow.com/questions/3829150/google-chrome-extension-console-log-from-background-page)**
@@ -20,60 +24,8 @@
 // >url:https://stackoverflow.com/questions/3829150/google-chrome-extension-console-log-from-background-page
 
 
-     var parent = chrome.contextMenus.create({"title": "MarkCopy","contexts": ['all']});
-
-       chrome.contextMenus.create({
-        title:  chrome.i18n.getMessage('ouput_current_window'),
-        type: "checkbox",
-        parentId:parent,
-        // contexts: ['link', 'page'],
-        onclick: function(info, tab) {
-           // alert("url "+info.linkUrl+",tab "+tab.title)
-                  console.log("checkbox item " + info.menuItemId +  
-              " was clicked, state is now: " + info.checked +  
-              "(previous state was " + info.wasChecked + ")");  
-        }
-    });
-
-    chrome.contextMenus.create({
-        title: chrome.i18n.getMessage('menu_refer_block'),
-        parentId:parent,
-        // contexts: ['link', 'page'],
-        onclick: function(info, tab) {
-
-            // alert("checkbox 菜单项ID: " + info.menuItemId +
-            //   " 现在的状态: " + info.checked +
-            //   "（之前的状态 " + info.wasChecked + ")");
-
-          
-            allowClickProcessing = false;
-            console.log("copyTabAsReferBlock222 "+allowClickProcessing)
-            copyTabAsReferBlock(tab,false)
-        }
-    });
-
-      chrome.contextMenus.create({
-        title:  chrome.i18n.getMessage('menu_footmark'),
-        parentId:parent,
-        // contexts: ['link', 'page'],
-        onclick: function(info, tab) {
-           // alert("url "+info.linkUrl+",tab "+tab.title)
-            allowClickProcessing = false;
-            copyTabAsFootmark(tab,false)
-        }
-    });
-
-         chrome.contextMenus.create({
-        title: chrome.i18n.getMessage('menu_link'),
-        parentId:parent,
-        // contexts: ['link', 'page'],
-        onclick: function(info, tab) {
-           // alert("url "+info.linkUrl+",tab "+tab.title)
-            allowClickProcessing = false;
-            copyTabAsLink(tab,false)
-        }
-    });
-
+    
+     createMenus();
 
 
    
@@ -213,6 +165,70 @@ function exchangeTab(){
 
    }  
 
+
+   function createMenus(){
+       var parent = chrome.contextMenus.create({"title": "MarkCopy","contexts": ['all']});
+
+       chrome.contextMenus.create({
+        title:  chrome.i18n.getMessage('ouput_current_window'),
+        type: "checkbox",
+        checked:listMode,
+        parentId:parent,
+        // contexts: ['link', 'page'],
+        onclick: function(info, tab) {
+           // alert("url "+info.linkUrl+",tab "+tab.title)
+                  console.log("checkbox item " + info.menuItemId +  
+              " was clicked, state is now: " + info.checked +  
+              "(previous state was " + info.wasChecked + ")");  
+
+             listMode = info.checked
+             setKeyValue("listMode",info.checked)   
+
+             var tmp = getKeyValue("listMode",true);
+             console.log("keyVale "+tmp)  
+        }
+    });
+
+    chrome.contextMenus.create({
+        title: chrome.i18n.getMessage('menu_refer_block'),
+        parentId:parent,
+        // contexts: ['link', 'page'],
+        onclick: function(info, tab) {
+
+            // alert("checkbox 菜单项ID: " + info.menuItemId +
+            //   " 现在的状态: " + info.checked +
+            //   "（之前的状态 " + info.wasChecked + ")");
+
+          
+            allowClickProcessing = false;
+            console.log("copyTabAsReferBlock222 "+allowClickProcessing)
+            copyTabAsReferBlock(tab,false)
+        }
+    });
+
+      chrome.contextMenus.create({
+        title:  chrome.i18n.getMessage('menu_footmark'),
+        parentId:parent,
+        // contexts: ['link', 'page'],
+        onclick: function(info, tab) {
+           // alert("url "+info.linkUrl+",tab "+tab.title)
+            allowClickProcessing = false;
+            copyTabAsFootmark(tab,false)
+        }
+    });
+
+         chrome.contextMenus.create({
+        title: chrome.i18n.getMessage('menu_link'),
+        parentId:parent,
+        // contexts: ['link', 'page'],
+        onclick: function(info, tab) {
+           // alert("url "+info.linkUrl+",tab "+tab.title)
+            allowClickProcessing = false;
+            copyTabAsLink(tab,false)
+        }
+    });
+   }
+
    
    
 
@@ -226,11 +242,21 @@ function exchangeTab(){
         notifyOK(tab);
     }
 
-     function copyTabAsMD(tab,format,withDesc){
+    function copyInfoAsMD(tab,format,withDesc){
+
       if(withDesc){
           copyWithDesc(tab,format)
       }
       else  copyTab(tab,format,null);
+    }
+
+     function copyTabAsMD(tab,format,withDesc){
+       if(listMode){
+
+       }
+      else {
+        copyInfoAsMD(tab,format,withDesc)
+      }
 
    }
 
