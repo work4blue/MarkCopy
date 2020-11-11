@@ -105,14 +105,14 @@ function exchangeTab(){
 
          try {
                 if (clicks > 2) {
-                    copyTabAsLink(tab,true)
+                    copyInfoAsMD(tab,'link',true)
                   //triple click
                 } else if (clicks > 1){
                    //double click
-                  copyTabAsFootmark(tab,true)
+                   copyInfoAsMD(tab,'footmark',true)
                 }
                 else 
-                    copyTabAsReferBlock(tab,true)
+                     copyInfoAsMD(tab,'referBlock',true)
             } catch (err) {
                 notifyError(tab);
             }
@@ -233,15 +233,25 @@ function exchangeTab(){
 
    
    
-
     function copyTab(tab,format,desc){
+         referIndex = referIndex+1
+        
+        console.log("copyTab "+format+",idx="+referIndex)
+        var text = tabText(tab,format,referIndex,desc,false)
+
+        copyToClipboard(text)
+        notifyOK(tab);
+
+    }
+
+    function copyListModeTab(tab,format,desc){
         referIndex = referIndex+1
         
         console.log("copyTab "+format+",idx="+referIndex)
-        var text = tabText(tab,format,referIndex,desc,listMode)
+        var text = tabText(tab,format,referIndex,desc,true)
        // alert("copy "+referIndex+" = "+text)
 
-       if(listMode ){
+  
 
          listContent +=text
 
@@ -249,18 +259,13 @@ function exchangeTab(){
 
             copyToClipboard(listContent)
              notifyOK(tab);
-           
+         }  
 
-         }
+         
         
  
          return ;
-     }
-       
-
-        copyToClipboard(text)
-        notifyOK(tab);
-       
+        
     }
 
     function copyInfoAsMD(tab,format,withDesc){
@@ -281,12 +286,12 @@ function exchangeTab(){
         wot = wots[i];
         if (wot.tabs) { // window
             for (var j = 0; j < wot.tabs.length; j++) {
-                 copyTab( wot.tabs[j],format,desc);
+                 copyListModeTab( wot.tabs[j],format,desc);
             }
         } else { // tab
             //if (wot.highlighted ) 
             {
-                 copyTab(wot,format,desc);
+                 copyListModeTab(wot,format,desc);
             }
         }
     }

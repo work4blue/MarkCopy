@@ -15,17 +15,40 @@ footerMark
 
 */
 
+function getTrimText(txt,len){
+    if(txt.length > len){
+      return  txt.substr(0,len-3) +'...'
+    }
+
+    return txt 
+}
+
+
+function getShortUrl(url){
+   var pos = url.indexOf('?');
+    if(pos>=0)
+    {
+       return url.substr(0,pos)
+    }
+    else return url
+}
+
 function tabText(t, format, index,desc,list) {
 
     if(list == undefined)
         list = false
+
+        var shortUrl = getShortUrl(t.url);
+        //防止过长标题和网址，影响美观
+
+        var title = (t.title && t.title.trim() ? getTrimText(t.title,64) : shortUrl) 
 
     switch (format) {
         case 'referBlock':{
 
 
 
-            var title = (t.title && t.title.trim() ? t.title : t.url) 
+            
 
             var firstCh = list ? '':'>'
 
@@ -33,19 +56,23 @@ function tabText(t, format, index,desc,list) {
 
             content += firstCh+'#### **[' +title + '](' + t.url + ')**\n'
 
-             if(desc && (title !=desc) )
-                content += firstCh+'\n'+firstCh+' &ensp;&ensp;'+desc +'\n'
+            
 
-             content +=firstCh+'\n'+firstCh+chrome.i18n.getMessage('link')+':'+t.url+'\n\n';
+             if(desc && (title !=desc) ){
+                content += firstCh+'\n'+firstCh+' &ensp;&ensp;'+getTrimText(desc,100)  +'\n'
+             }
+
+             content +=firstCh+'\n'+firstCh+chrome.i18n.getMessage('link')+': ['+shortUrl+']('+t.url+')'+'\n\n';
+              //content +='>\n> 🔗  '+t.url; //生成是乱码
              return content
             }
 
           case 'footmark':
 
-            return ' [^'+index+']: ' + (t.title && t.title.trim() ? t.title : t.url) + ' ' + t.url +'\n';  
+            return ' [^'+index+']: ' + title + ' ' +' ['+shortUrl+']('+t.url+')' +'\n';  
          case 'link':
 
-            var text3  = '[' + (t.title && t.title.trim() ? t.title : t.url) + '](' + t.url + ')\n';   
+            var text3  = '[' + title + '](' + t.url + ')\n';   
             if(list)
                text3 = '+ '+text3 +'\n'
 
