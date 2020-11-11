@@ -16,6 +16,7 @@
     var listMode = Boolean(getKeyValue("listMode",true));
      var listCount = 0 ;
      var listContent ='';
+     var listHeader = ''; //部分输出有头部内容
 
     //var listMode = true
 
@@ -246,18 +247,33 @@ function exchangeTab(){
 
     function copyListModeTab(tab,format,desc){
         referIndex = referIndex+1
-        
+
+        if(referIndex === 1) {
+            if (format === 'footmark') {
+          //只有引用记录才会正常显示
+               listHeader = chrome.i18n.getMessage('link');
+
+              for(var i=1;i<listCount;i++){
+               listHeader +=' [^'+i+']'
+               }
+ 
+             listHeader += '\n\n'
+            }
+            else 
+             listHeader = ''
+         }
+
         console.log("copyTab "+format+",idx="+referIndex)
         var text = tabText(tab,format,referIndex,desc,true)
        // alert("copy "+referIndex+" = "+text)
 
-  
+        
 
          listContent +=text
 
          if(referIndex>=listCount){
 
-            copyToClipboard(listContent)
+             copyToClipboard(listHeader + listContent)
              notifyOK(tab);
          }  
 
@@ -281,6 +297,7 @@ function exchangeTab(){
     function tabsText(wots, format, desc) {
     
      
+
     var wot;
     for (var i = 0; i < wots.length; i++) {
         wot = wots[i];
@@ -310,6 +327,7 @@ function exchangeTab(){
                         referIndex = 0
                         listCount = tabs.length
                         listContent = '';
+                        listHeader = '';
 
                         tabsText(tabs,format)
                     });
