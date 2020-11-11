@@ -13,7 +13,9 @@
 
     var bkg = chrome.extension.getBackgroundPage();
 
-    var listMode = getKeyValue("listMode",true);
+    var listMode = Boolean(getKeyValue("listMode",true));
+     var listCount = 0 ;
+     var listContent ='';
 
     //var listMode = true
 
@@ -184,8 +186,8 @@ function exchangeTab(){
              listMode = info.checked
              setKeyValue("listMode",info.checked)   
 
-             var tmp = getKeyValue("listMode",true);
-             console.log("keyVale "+tmp)  
+         //    var tmp = getKeyValue("listMode",true);
+         //    console.log("keyVale "+tmp)  
         }
     });
 
@@ -236,10 +238,29 @@ function exchangeTab(){
         referIndex = referIndex+1
         
         console.log("copyTab "+format+",idx="+referIndex)
-        var text = tabText(tab,format,referIndex,desc)
+        var text = tabText(tab,format,referIndex,desc,listMode)
        // alert("copy "+referIndex+" = "+text)
+
+       if(listMode ){
+
+         listContent +=text
+
+         if(referIndex>=listCount){
+
+            copyToClipboard(listContent)
+             notifyOK(tab);
+           
+
+         }
+        
+ 
+         return ;
+     }
+       
+
         copyToClipboard(text)
         notifyOK(tab);
+       
     }
 
     function copyInfoAsMD(tab,format,withDesc){
@@ -250,8 +271,43 @@ function exchangeTab(){
       else  copyTab(tab,format,null);
     }
 
+
+    //多个tab处理
+    function tabsText(wots, format, desc) {
+    
+     
+    var wot;
+    for (var i = 0; i < wots.length; i++) {
+        wot = wots[i];
+        if (wot.tabs) { // window
+            for (var j = 0; j < wot.tabs.length; j++) {
+                 copyTab( wot.tabs[j],format,desc);
+            }
+        } else { // tab
+            //if (wot.highlighted ) 
+            {
+                 copyTab(wot,format,desc);
+            }
+        }
+    }
+
+    
+   }
+
      function copyTabAsMD(tab,format,withDesc){
-       if(listMode){
+       if(listMode && !withDesc){
+          //列表输出
+         
+
+          //取当前窗口
+
+           chrome.tabs.getAllInWindow(null, function(tabs) {
+                        referIndex = 0
+                        listCount = tabs.length
+                        listContent = '';
+
+                        tabsText(tabs,format)
+                    });
 
        }
       else {

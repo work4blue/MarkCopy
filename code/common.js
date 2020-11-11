@@ -15,27 +15,41 @@ footerMark
 
 */
 
-function tabText(t, format, index,desc) {
+function tabText(t, format, index,desc,list) {
+
+    if(list == undefined)
+        list = false
 
     switch (format) {
         case 'referBlock':{
 
+
+
             var title = (t.title && t.title.trim() ? t.title : t.url) 
-            var content = '>#### **[' +title + '](' + t.url + ')**\n'
+
+            var firstCh = list ? '':'>'
+
+            var content = list ? '---\n':''
+
+            content += firstCh+'#### **[' +title + '](' + t.url + ')**\n'
 
              if(desc && (title !=desc) )
-                content += '>\n> &ensp;&ensp;'+desc +'\n'
+                content += firstCh+'\n'+firstCh+' &ensp;&ensp;'+desc +'\n'
 
-             content +='>\n>'+chrome.i18n.getMessage('link')+':'+t.url;
+             content +=firstCh+'\n'+firstCh+chrome.i18n.getMessage('link')+':'+t.url+'\n\n';
              return content
             }
 
           case 'footmark':
 
-            return chrome.i18n.getMessage('link')+' [^'+index+']\n[^'+index+']: ' + (t.title && t.title.trim() ? t.title : t.url) + ' ' + t.url ;  
+            return ' [^'+index+']: ' + (t.title && t.title.trim() ? t.title : t.url) + ' ' + t.url +'\n';  
          case 'link':
 
-            return '[' + (t.title && t.title.trim() ? t.title : t.url) + '](' + t.url + ')';     
+            var text3  = '[' + (t.title && t.title.trim() ? t.title : t.url) + '](' + t.url + ')\n';   
+            if(list)
+               text3 = '+ '+text3 +'\n'
+
+            return text3     
      }
  } 
 
