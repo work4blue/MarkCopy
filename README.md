@@ -61,7 +61,7 @@ refer [^3]
     ![image.png](img4.png)
 
    比如输出 参考文献列表 
-    ![参考文献列表](img5.png)
+![refer list](img5.png)
 
-    以及用分割线输出的引用列表
-    ![引用列表](img6.png)
+以及用分割线输出的引用列表
+![list](img6.png)
