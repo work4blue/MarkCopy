@@ -161,8 +161,11 @@ function exchangeTab(){
             return;
           }
       var result = results[0];
+      var desc = (result === null)?'':result.description;
 
-      copyTab(myTab,myFormat,result.description);
+   
+
+      copyTab(myTab,myFormat,desc);
     // Now, do something with result.title and result.description
      });
 
@@ -230,6 +233,17 @@ function exchangeTab(){
             copyTabAsLink(tab,false)
         }
     });
+
+
+      chrome.contextMenus.create({
+        title: chrome.i18n.getMessage('more_table'),
+        parentId:parent,
+        // contexts: ['link', 'page'],
+        onclick: function(info, tab) {
+           // alert("url "+info.linkUrl+",tab "+tab.title)
+            chrome.tabs.create({url: "https://tableconvert.com/"});
+        }
+    });    
    }
 
    
