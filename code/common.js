@@ -32,8 +32,11 @@ function getShortUrl(url){
     }
     else return url
 }
+//newUrl 如果要调整url，新的url
+function tabText(t, format, index,desc,list,newUrl) {
 
-function tabText(t, format, index,desc,list) {
+    if(newUrl == undefined)
+          newUrl =  t.url 
 
     if(list == undefined)
         list = false
@@ -54,7 +57,7 @@ function tabText(t, format, index,desc,list) {
 
             var content = list ? '---\n':''
 
-            content += firstCh+'#### **[' +title + '](' + t.url + ')**\n'
+            content += firstCh+'#### **[' +title + '](' + newUrl + ')**\n'
 
             
 
@@ -62,17 +65,17 @@ function tabText(t, format, index,desc,list) {
                 content += firstCh+'\n'+firstCh+' &ensp;&ensp;'+getTrimText(desc,100)  +'\n'
              }
 
-             content +=firstCh+'\n'+firstCh+chrome.i18n.getMessage('link')+': ['+shortUrl+']('+t.url+')'+'\n\n';
+             content +=firstCh+'\n'+firstCh+chrome.i18n.getMessage('link')+': ['+shortUrl+']('+newUrl+')'+'\n\n';
               //content +='>\n> 🔗  '+t.url; //生成是乱码
              return content
             }
 
           case 'footmark':
 
-            return ' [^'+index+']: ' + title + ' ' +' ['+shortUrl+']('+t.url+')' +'\n';  
+            return ' [^'+index+']: ' + title + ' ' +' ['+shortUrl+']('+newUrl+')' +'\n';  
          case 'link':
 
-            var text3  = '[' + title + '](' + t.url + ')\n';   
+            var text3  = '[' + title + '](' + newUrl + ')\n';   
             if(list)
                text3 = '+ '+text3 +'\n'
 
